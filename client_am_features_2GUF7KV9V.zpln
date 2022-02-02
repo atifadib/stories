@@ -1,0 +1,2958 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%pyspark\nspark, sc",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:08:11+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "(<pyspark.sql.session.SparkSession object at 0x7f6eec739990>, <SparkContext master=yarn appName=Zeppelin>)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003060_1224103114",
+      "id": "paragraph_1643367199442_1378205376",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "dateStarted": "2022-01-29T07:08:11+0000",
+      "dateFinished": "2022-01-29T07:08:33+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:8990"
+    },
+    {
+      "text": "%pyspark\nfrom datetime import datetime\nfrom collections import defaultdict\nimport statistics\nfrom pyspark.sql.functions import col, lit, concat, countDistinct, udf, desc\nfrom pyspark.sql.types import DateType, StringType\nimport dateutil.parser\n\ndef date_parse(date_string):\n    return dateutil.parser.parse(date_string)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:08:12+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_754115607",
+      "id": "paragraph_1643368697154_96762977",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "dateStarted": "2022-01-29T07:08:31+0000",
+      "dateFinished": "2022-01-29T07:08:33+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8991"
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:08:33+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643440113546_615520959",
+      "id": "paragraph_1643440113546_615520959",
+      "dateCreated": "2022-01-29T07:08:33+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:17166"
+    },
+    {
+      "text": "%pyspark\nselected_clients = spark.read.csv('s3a://yodlee-ml-output/all_global_ids.txt', header=True)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:08:38+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=0",
+              "$$hashKey": "object:17249"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_161710518",
+      "id": "paragraph_1643367208948_549910651",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "dateStarted": "2022-01-29T04:08:57+0000",
+      "dateFinished": "2022-01-29T04:09:03+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8992"
+    },
+    {
+      "text": "%pyspark\nused_columns = ['client_id','channel','account_number','total_market_value','un-suppervised_assets','total_cash', 'advisor_id',\n\t\t\t\t'registration_type','proposal_risk_rating','tax_status','product_id','family_member_id','last_reconciled_date','start_date']\ndata = spark.read.option(\"recursiveFileLookup\",\"true\").parquet(\"s3a://envestnet-data-store/wheelhouse_data_lake/raw/monthly_raw/accountmaster/\")\ndata = data.select(*used_columns)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:10:08+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=1",
+              "$$hashKey": "object:11621"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=2",
+              "$$hashKey": "object:11622"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=3",
+              "$$hashKey": "object:11623"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=4",
+              "$$hashKey": "object:11624"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=5",
+              "$$hashKey": "object:11625"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=6",
+              "$$hashKey": "object:11626"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=7",
+              "$$hashKey": "object:11627"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=8",
+              "$$hashKey": "object:11628"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=9",
+              "$$hashKey": "object:11629"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=10",
+              "$$hashKey": "object:11630"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=11",
+              "$$hashKey": "object:11631"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=12",
+              "$$hashKey": "object:11632"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=13",
+              "$$hashKey": "object:11633"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=14",
+              "$$hashKey": "object:11634"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=15",
+              "$$hashKey": "object:11635"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=16",
+              "$$hashKey": "object:11636"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=17",
+              "$$hashKey": "object:11637"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=18",
+              "$$hashKey": "object:11638"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=19",
+              "$$hashKey": "object:11639"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=20",
+              "$$hashKey": "object:11640"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=21",
+              "$$hashKey": "object:11641"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_41612773",
+      "id": "paragraph_1643367258124_139290456",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8993",
+      "dateFinished": "2022-01-29T04:10:54+0000",
+      "dateStarted": "2022-01-29T04:10:08+0000"
+    },
+    {
+      "text": "%pyspark\ndata = data.withColumn('global_id', concat(col('channel'),lit('_'),col('client_id')))\ndata = data.join(selected_clients, on='global_id', how='leftsemi')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:11:19+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_32923856",
+      "id": "paragraph_1643367282344_2122013326",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8994",
+      "dateFinished": "2022-01-29T04:11:19+0000",
+      "dateStarted": "2022-01-29T04:11:19+0000"
+    },
+    {
+      "text": "%pyspark\ndate_converter = udf(date_parse, DateType())\ndata = data.filter(data.last_reconciled_date != '').filter(col('last_reconciled_date').isNotNull())\ndata = data.withColumn('my_date', date_converter(col('last_reconciled_date')))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T06:16:12+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_1703075181",
+      "id": "paragraph_1643367313085_1864393686",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8995",
+      "dateFinished": "2022-01-29T04:11:21+0000",
+      "dateStarted": "2022-01-29T04:11:20+0000"
+    },
+    {
+      "text": "%pyspark\nregistration_type_mapping = spark.read.csv('s3a://yodlee-ml-output/registration_type_mapping.txt', header=True)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:11:27+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=22",
+              "$$hashKey": "object:11758"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_909612256",
+      "id": "paragraph_1643367363482_229290629",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8996",
+      "dateFinished": "2022-01-29T04:11:29+0000",
+      "dateStarted": "2022-01-29T04:11:27+0000"
+    },
+    {
+      "text": "%pyspark\nregistration_type_mapping.show(5, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:11:30+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------+-----------------------------------+\n|registration_type    |norm_type                          |\n+---------------------+-----------------------------------+\n|IRA - Traditional IRA|Individual Retirement Account (IRA)|\n|IRA - Rollover       |Rollover IRA                       |\n|IRA                  |Individual Retirement Account (IRA)|\n|Individual           |Individual                         |\n|IRA - Roth           |Roth IRA                           |\n+---------------------+-----------------------------------+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=23",
+              "$$hashKey": "object:11805"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_1550887890",
+      "id": "paragraph_1643367946984_868571346",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8997",
+      "dateFinished": "2022-01-29T04:11:31+0000",
+      "dateStarted": "2022-01-29T04:11:30+0000"
+    },
+    {
+      "text": "%pyspark\ndata = data.join(registration_type_mapping, on='registration_type', how='left')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:11:36+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_1548528105",
+      "id": "paragraph_1643367955735_1292234578",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8998",
+      "dateFinished": "2022-01-29T04:11:36+0000",
+      "dateStarted": "2022-01-29T04:11:36+0000"
+    },
+    {
+      "text": "%pyspark\ndata = data.fillna({'norm_type': 'UNK_Registration_Type'})",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:11:42+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003061_1769942509",
+      "id": "paragraph_1643368246651_1498724319",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:8999",
+      "dateFinished": "2022-01-29T04:11:42+0000",
+      "dateStarted": "2022-01-29T04:11:42+0000"
+    },
+    {
+      "text": "%pyspark\nregistration_type_mapper = data.select('norm_type').distinct().collect()\nregistration_type_mapper = [_.norm_type for _ in registration_type_mapper]\nregistration_type_mapper = sc.broadcast(registration_type_mapper)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:11:46+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=24",
+              "$$hashKey": "object:11888"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=26",
+              "$$hashKey": "object:11889"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=27",
+              "$$hashKey": "object:11890"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=28",
+              "$$hashKey": "object:11891"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_799357973",
+      "id": "paragraph_1643378399042_842846118",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9000",
+      "dateFinished": "2022-01-29T04:13:24+0000",
+      "dateStarted": "2022-01-29T04:11:46+0000"
+    },
+    {
+      "text": "%pyspark\n\ndef profiler(iterable):\n\titerable = list(iterable)\n\tfeatures = {'global_id': iterable[0]['global_id'], 'client_id':iterable[0]['client_id'], 'advisor_id': iterable[0]['advisor_id'],\n\t\t\t\t'channel': iterable[0]['channel'], 'my_date': iterable[0]['my_date'],\n\t\t\t\t'family_mem_id': iterable[0]['family_member_id']}\n\n\t# # Minimum Last Recon Date\n\t# tmp = iterable[0]['my_date'] - iterable[0]['min_recon_date']\n\t# features['days_since_oldest_account_on_platform'] = tmp.days\n\t# tmp = iterable[0]['my_date'] - iterable[0]['min_account_start_date']\n\t# features['oldest_account_age'] = tmp.days\n\n\t# Num accounts\n\tfeatures['num_accounts'] = len(set([_['account_number'] for _ in iterable]))\n\n\t# total AUM\n\taums = [_['total_market_value'] for _ in iterable if _['total_market_value']\n\t and type(_['total_market_value']) == float]\n\tif aums:\n\t\tfeatures['total_aum'] = sum(aums)\n\t\tfeatures['max_aum'] = max(aums)\n\t\tfeatures['min_aum'] = min(aums)\n\t\tfeatures['diff_min_max_aum'] = features['max_aum'] - features['min_aum']\n\t\tfeatures['median_aum'] = statistics.median(aums)\n\telse:\n\t\tfeatures['total_aum'] = 0.0\n\t\tfeatures['max_aum'] = 0.0\n\t\tfeatures['min_aum'] = 0.0\n\t\tfeatures['diff_min_max_aum'] = 0.0\n\t\tfeatures['median_aum'] = 0.0\n\t# Total unsupervised assets\n\tfeatures['total_unsupervised_assets'] = sum([_['un-suppervised_assets'] for _ in iterable if _['un-suppervised_assets']\n\t and type(_['un-suppervised_assets']) == float])\n\t\n\t# Total Cash\n\tfeatures['total_cash'] = sum([_['total_cash'] for _ in iterable if _['total_cash']\n\t and type(_['total_cash']) == float])\n\t\n\t# AUM per registration-type\n\t# Min AUM - registration type\n\t# Max AUM - registration type\n\tregistration_type_to_aum = defaultdict(float)\n\tregistration_type_to_count = defaultdict(set)\n\tfor item in iterable:\n\t\tnorm_registration_type = item['norm_type']\n\t\ttmv = item['total_market_value']\n\t\tif tmv:\n\t\t    registration_type_to_aum[norm_registration_type] += item['total_market_value']\n\t\tregistration_type_to_count[norm_registration_type].add(item['account_number'])\n\n\tfor registration_type in registration_type_mapper.value:\n\t\tcurr_aum = registration_type_to_aum[registration_type]\n\t\tfeatures[registration_type + \"_AUM\"] = curr_aum\n\n\t\n\t# Median Risk\n\t# Min Risk \n\t# Max Risk\n\trisks = [_['proposal_risk_rating'] for _ in iterable if _['proposal_risk_rating']]\n\tif risks:\n\t\tfeatures['min_risk'] = min(risks)\n\t\tfeatures['max_risk'] = max(risks)\n\t\tfeatures['median_risk'] = statistics.median(risks)\n\t\tfeatures['diff_min_max_risk'] = features['max_risk'] - features['min_risk']\n\telse:\n\t\tfeatures['min_risk'] = 0.0\n\t\tfeatures['max_risk'] = 0.0\n\t\tfeatures['median_risk'] = 0.0\n\t\tfeatures['diff_min_max_risk'] = 0.0\n\tweighted_risk = [_['proposal_risk_rating']*_['total_market_value'] for _ in iterable if _['proposal_risk_rating'] and _['total_market_value']]\n\tif weighted_risk and sum(aums):\n\t\tfeatures['weighted_risk'] = sum(weighted_risk) / sum(aums)\n\telse:\n\t    features['weighted_risk'] = 0.0\n\t\n\t# Tax Status Counter\n\ttax_status_counter = defaultdict(set)\n\tfor item in iterable:\n\t\ttax_status_counter[item['tax_status']].add(item['account_number'])\n\tfeatures['tax_status_0'] = len(tax_status_counter.get(0, {}))\n\tfeatures['tax_status_1'] = len(tax_status_counter.get(1, {}))\n\t\n\t# Number of products\n\t# features['num_products'] = len(set([_['product_id'] for _ in iterable]))\n\n\t# Return feature vector\n\tvector = []\n\tfor key in sorted(features.keys()):\n\t\tvector.append(features[key])\n\n\treturn vector",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:13:36+0000",
+      "progress": 0,
+      "config": {
+        "lineNumbers": true,
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_844714315",
+      "id": "paragraph_1643368454129_106280360",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9001",
+      "dateFinished": "2022-01-29T04:13:36+0000",
+      "dateStarted": "2022-01-29T04:13:36+0000"
+    },
+    {
+      "text": "%pyspark\noutput = data.rdd.map(lambda row: ((row.global_id, row.my_date), row.asDict())).groupByKey().mapValues(profiler)\noutput = output.map(lambda row: row[1])",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T05:02:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_1563288150",
+      "id": "paragraph_1643378308625_1195840592",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9002",
+      "dateFinished": "2022-01-29T05:02:00+0000",
+      "dateStarted": "2022-01-29T05:02:00+0000"
+    },
+    {
+      "text": "%pyspark\nfeatures_list = ['Annuity_AUM', 'Brokerage_Cash_AUM', 'Charitable_Gift_Account_AUM', 'Conservator_AUM', 'Corporate_Investment_Account_AUM', 'Coverdell_Education_Savings_Account_ESA_AUM', 'Custodial_Account_AUM', 'Deferred_Compensation_Plan_457_AUM', 'Defined_Benefit_Plan_AUM', 'Defined_Contribution_Plan_AUM', 'Educational_Savings_Plan_529_AUM', 'Employee_Retirement_Account_401k_AUM', 'Employee_Retirement_Savings_Plan_403b_AUM', 'Estate_AUM', 'Executor_AUM', 'Health_Savings_Account_HSA_AUM', 'Individual_Retirement_Account_IRA_AUM', 'Individual_AUM', 'Joint_Tenants_Community_Property_AUM', 'Joint_Tenants_Tenancy_in_Common_JTIC_AUM', 'Joint_Tenants_Tenants_By_Entirety_AUM', 'Joint_Tenants_With_Rights_Of_Survivorship_JTWROS_AUM', 'Keogh_Plan_AUM', 'Money_Purchase_Plan_AUM', 'Money_Purchase_Retirement_Plan_401a_AUM', 'Non_Profit_Organization_501c_AUM', 'Nonqualified_Deferred_Compensation_Plan_409a_AUM', 'Other_AUM', 'Partnership_AUM', 'Pension_Plan_AUM', 'Profit_Sharing_Plan_AUM', 'Proprietorship_AUM', 'Rollover_IRA_AUM', 'Roth_403b_AUM', 'Roth_IRA_AUM', 'SEP_IRA_AUM', 'Simple_IRA_AUM', 'Spousal_IRA_AUM', 'Trust_AUM', 'UNK_Registration_Type_AUM', 'Uniform_Gift_to_Minors_Act_UGMA_AUM', 'Uniform_Transfer_to_Minors_Act_UTMA_AUM', 'advisor_id', 'channel', 'client_id', 'diff_min_max_aum', 'diff_min_max_risk', 'family_mem_id', 'global_id', 'max_aum', 'max_risk', 'median_aum', 'median_risk', 'min_aum', 'min_risk', 'my_date', 'num_accounts', 'tax_status_0', 'tax_status_1', 'total_aum', 'total_cash', 'total_unsupervised_assets', 'weighted_risk']",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T05:02:01+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_1202195574",
+      "id": "paragraph_1643383887741_329288435",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9003",
+      "dateFinished": "2022-01-29T05:02:01+0000",
+      "dateStarted": "2022-01-29T05:02:01+0000"
+    },
+    {
+      "text": "%pyspark\noutput = spark.createDataFrame(output, features_list)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T05:02:04+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=41",
+              "$$hashKey": "object:13286"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_823260623",
+      "id": "paragraph_1643379076307_914583246",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9004",
+      "dateFinished": "2022-01-29T05:12:03+0000",
+      "dateStarted": "2022-01-29T05:02:04+0000"
+    },
+    {
+      "text": "%pyspark\noutput.count()",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:18:32+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "230056127\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=33",
+              "$$hashKey": "object:12018"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=34",
+              "$$hashKey": "object:12019"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_1603432225",
+      "id": "paragraph_1643379594657_376317393",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9005",
+      "dateFinished": "2022-01-29T04:35:40+0000",
+      "dateStarted": "2022-01-29T04:18:32+0000"
+    },
+    {
+      "text": "%pyspark\nfmd_data = spark.read.option(\"recursiveFileLookup\",\"true\").parquet('s3a://envestnet-data-store/envestnet_data/fmd/fmdfamilymember/')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:37:56+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=35",
+              "$$hashKey": "object:12186"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643429003062_1916819086",
+      "id": "paragraph_1643380284777_101770173",
+      "dateCreated": "2022-01-29T04:03:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:9006",
+      "dateFinished": "2022-01-29T04:38:15+0000",
+      "dateStarted": "2022-01-29T04:37:56+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nfmd_data.show(5, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:38:03+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=36",
+              "$$hashKey": "object:12222"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431076257_565536917",
+      "id": "paragraph_1643431076257_565536917",
+      "dateCreated": "2022-01-29T04:37:56+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12033",
+      "dateFinished": "2022-01-29T04:38:19+0000",
+      "dateStarted": "2022-01-29T04:38:03+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+-----------+-----------+----------------+------------+-------------+------+--------------+----------+-----------------+----------+-------------+--------------+----------------------+---------------------+----------+---------------+------------------+---------+----------+\n|record_type|customer_id|entity_type|family_member_id|relationship|date_of_birth|gender|marital_status|dependents|employment_status|occupation|income_source|years_employed|country_of_citizenship|tax_residence_country|as_of_date|type           |original_file_name|channel  |dt        |\n+-----------+-----------+-----------+----------------+------------+-------------+------+--------------+----------+-----------------+----------+-------------+--------------+----------------------+---------------------+----------+---------------+------------------+---------+----------+\n|M          |1147862    |1          |2104615         |1           |1967-08-31   |0     |0             |0         |0                |          |             |0             |999                   |0                    |2021-10-18|FMDFamilyMember|                  |evergreen|2021-10-18|\n|M          |1147863    |1          |1786142         |1           |1973-10-31   |0     |0             |0         |0                |          |             |0             |999                   |0                    |2021-10-18|FMDFamilyMember|                  |evergreen|2021-10-18|\n|M          |1147864    |1          |1467099         |1           |1960-09-30   |0     |0             |0         |0                |          |             |0             |999                   |0                    |2021-10-18|FMDFamilyMember|                  |evergreen|2021-10-18|\n|M          |1147865    |1          |2104616         |1           |1964-03-31   |0     |0             |0         |0                |          |             |0             |999                   |0                    |2021-10-18|FMDFamilyMember|                  |evergreen|2021-10-18|\n|M          |1147866    |1          |1150015         |1           |1960-10-31   |0     |0             |0         |0                |          |             |0             |999                   |0                    |2021-10-18|FMDFamilyMember|                  |evergreen|2021-10-18|\n+-----------+-----------+-----------+----------------+------------+-------------+------+--------------+----------+-----------------+----------+-------------+--------------+----------------------+---------------------+----------+---------------+------------------+---------+----------+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\nfmd_data = fmd_data.select(*['customer_id','family_member_id','date_of_birth','channel'])",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:40:12+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431083985_804046589",
+      "id": "paragraph_1643431083985_804046589",
+      "dateCreated": "2022-01-29T04:38:03+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12111",
+      "dateFinished": "2022-01-29T04:40:12+0000",
+      "dateStarted": "2022-01-29T04:40:12+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nfmd_data = fmd_data.withColumn('age_id', concat(col('channel'),lit('_'),col('customer_id'), lit('_'), col('family_member_id')))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:41:19+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431212876_2087365081",
+      "id": "paragraph_1643431212876_2087365081",
+      "dateCreated": "2022-01-29T04:40:12+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12324",
+      "dateFinished": "2022-01-29T04:41:19+0000",
+      "dateStarted": "2022-01-29T04:41:19+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nfmd_data = fmd_data.select(*['age_id','date_of_birth'])",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:41:35+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431279228_357873947",
+      "id": "paragraph_1643431279228_357873947",
+      "dateCreated": "2022-01-29T04:41:19+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12402",
+      "dateFinished": "2022-01-29T04:41:35+0000",
+      "dateStarted": "2022-01-29T04:41:35+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nfmd_data.show(10, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:41:43+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=37",
+              "$$hashKey": "object:12654"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431295389_1579315296",
+      "id": "paragraph_1643431295389_1579315296",
+      "dateCreated": "2022-01-29T04:41:35+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12480",
+      "dateFinished": "2022-01-29T04:41:51+0000",
+      "dateStarted": "2022-01-29T04:41:43+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------------+-------------+\n|age_id                   |date_of_birth|\n+-------------------------+-------------+\n|evergreen_1147862_2104615|1967-08-31   |\n|evergreen_1147863_1786142|1973-10-31   |\n|evergreen_1147864_1467099|1960-09-30   |\n|evergreen_1147865_2104616|1964-03-31   |\n|evergreen_1147866_1150015|1960-10-31   |\n|evergreen_61145_63412    |             |\n|evergreen_61880_64147    |             |\n|evergreen_61898_64165    |             |\n|evergreen_61960_64227    |             |\n|evergreen_62784_65051    |             |\n+-------------------------+-------------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\nfmd_data = fmd_data.filter(fmd_data.date_of_birth.isNotNull())\nfmd_data = fmd_data.filter(fmd_data.date_of_birth != '')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T04:45:52+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431303003_1351289678",
+      "id": "paragraph_1643431303003_1351289678",
+      "dateCreated": "2022-01-29T04:41:43+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12549",
+      "dateFinished": "2022-01-29T04:45:52+0000",
+      "dateStarted": "2022-01-29T04:45:52+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput = output.withColumn('age_id', concat(col('channel'),lit('_'),col('client_id'), lit('_'), col('family_mem_id')))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T05:02:18+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431477775_1249796870",
+      "id": "paragraph_1643431477775_1249796870",
+      "dateCreated": "2022-01-29T04:44:37+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12665",
+      "dateFinished": "2022-01-29T05:12:03+0000",
+      "dateStarted": "2022-01-29T05:02:18+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput = output.join(fmd_data, 'age_id', 'left')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T05:02:19+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431498798_304047122",
+      "id": "paragraph_1643431498798_304047122",
+      "dateCreated": "2022-01-29T04:44:58+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12734",
+      "dateFinished": "2022-01-29T05:12:03+0000",
+      "dateStarted": "2022-01-29T05:12:03+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput.write.option('mode','overwrite').parquet('s3a://yodlee-ml-output/client_account_master_features_v1.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T05:02:21+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=42",
+              "$$hashKey": "object:13324"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=43",
+              "$$hashKey": "object:13325"
+            },
+            {
+              "jobUrl": "http://ip-172-31-33-53.us-west-2.compute.internal:36969/jobs/job?id=44",
+              "$$hashKey": "object:13326"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431706016_865368284",
+      "id": "paragraph_1643431706016_865368284",
+      "dateCreated": "2022-01-29T04:48:26+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12942",
+      "dateFinished": "2022-01-29T05:20:59+0000",
+      "dateStarted": "2022-01-29T05:12:03+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_data = spark.read.parquet('s3a://yodlee-ml-output/client_account_master_features_v1.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:30:12+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=23",
+              "$$hashKey": "object:17962"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643431748875_747879364",
+      "id": "paragraph_1643431748875_747879364",
+      "dateCreated": "2022-01-29T04:49:08+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:13020",
+      "dateFinished": "2022-01-29T07:30:24+0000",
+      "dateStarted": "2022-01-29T07:30:12+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_data.count()",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:30:13+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=24",
+              "$$hashKey": "object:18005"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=25",
+              "$$hashKey": "object:18006"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643441407325_1231012933",
+      "id": "paragraph_1643441407325_1231012933",
+      "dateCreated": "2022-01-29T07:30:07+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:17832",
+      "dateFinished": "2022-01-29T07:30:40+0000",
+      "dateStarted": "2022-01-29T07:30:19+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "230056127\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ndef get_age_at_recon_date_(dob, recon_date):\n    try:\n        dob = date_parse(dob)\n    except:\n        return 'UNK_AGE'\n    recon_date = datetime(year=recon_date.year, month=recon_date.month, day=recon_date.day)\n    age = recon_date - dob\n    age = age.days\n    age = age / 365\n    if age < 20:\n        return 'Less-than-20'\n    elif 20 <= age < 30:\n        return '20-30'\n    elif 30 <= age < 40:\n        return '30-40'\n    elif 40 <= age < 50:\n        return '40-50'\n    elif 50 <= age < 60:\n        return '50-60'\n    elif 60 <= age < 70:\n        return '60-70'\n    elif 70 <= age < 80:\n        return '70-80'\n    elif 80 <= age < 90:\n        return '80-90'\n    elif 90 <= age < 100:\n        return '90-100'\n    elif age >= 100:\n        return '100+'\n\nget_age_at_recon_date = udf(get_age_at_recon_date_, StringType())\noutput_data = output_data.withColumn('age_at_last_recon_date', get_age_at_recon_date(col('date_of_birth'),col('my_date')))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:09:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643433925761_111780186",
+      "id": "paragraph_1643433925761_111780186",
+      "dateCreated": "2022-01-29T05:25:25+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:13339",
+      "dateFinished": "2022-01-29T07:09:00+0000",
+      "dateStarted": "2022-01-29T07:09:00+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_data.groupBy('age_at_last_recon_date').agg(countDistinct('global_id')).sort(desc('count(DISTINCT global_id)')).show(20, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T06:32:08+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:36689/jobs/job?id=5",
+              "$$hashKey": "object:16078"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:36689/jobs/job?id=6",
+              "$$hashKey": "object:16079"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:36689/jobs/job?id=7",
+              "$$hashKey": "object:16080"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643433937059_2035755564",
+      "id": "paragraph_1643433937059_2035755564",
+      "dateCreated": "2022-01-29T05:25:37+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:13434",
+      "dateFinished": "2022-01-29T06:34:54+0000",
+      "dateStarted": "2022-01-29T06:32:08+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------------+-------------------------+\n|age_at_last_recon_date|count(DISTINCT global_id)|\n+----------------------+-------------------------+\n|UNK_AGE               |5691982                  |\n|60-70                 |1300844                  |\n|50-60                 |1153911                  |\n|40-50                 |836783                   |\n|70-80                 |670089                   |\n|30-40                 |569459                   |\n|20-30                 |284908                   |\n|80-90                 |198373                   |\n|Less-than-20          |148147                   |\n|90-100                |39321                    |\n|100+                  |9990                     |\n+----------------------+-------------------------+\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ndef get_median_aum(iterable):\n    data = [_ for _ in iterable if _]\n    if not data:\n        return -1\n    return statistics.median(data)\n\nage_bucket_to_aum_stats = output_data.rdd.map(lambda row: ((row.age_at_last_recon_date, row.my_date), row.total_aum)).groupByKey().mapValues(get_median_aum)\nage_bucket_to_aum_stats = age_bucket_to_aum_stats.map(lambda row: [row[0][0], row[0][1], row[1]])\nage_bucket_to_aum_stats = spark.createDataFrame(age_bucket_to_aum_stats, ['age_at_last_recon_date', 'my_date', 'median_aum_at_age'])",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:09:06+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=1",
+              "$$hashKey": "object:17374"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643434892761_318782248",
+      "id": "paragraph_1643434892761_318782248",
+      "dateCreated": "2022-01-29T05:41:32+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14283",
+      "dateFinished": "2022-01-29T07:13:49+0000",
+      "dateStarted": "2022-01-29T07:09:06+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_data = output_data.join(age_bucket_to_aum_stats, on=['age_at_last_recon_date','my_date'], how='left')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:09:10+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643435916203_699071570",
+      "id": "paragraph_1643435916203_699071570",
+      "dateCreated": "2022-01-29T05:58:36+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14675",
+      "dateFinished": "2022-01-29T07:13:49+0000",
+      "dateStarted": "2022-01-29T07:09:10+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ndef get_median_risk(iterable):\n    data = [_ for _ in iterable if _]\n    # if not data:\n    #     return -1\n    return statistics.median(data)\n\nage_bucket_to_risk_stats = output_data.rdd.map(lambda row: (row.age_at_last_recon_date, row.weighted_risk)).groupByKey().mapValues(get_median_risk)\nage_bucket_to_risk_stats = age_bucket_to_risk_stats.map(lambda row: [row[0], row[1]])\nage_bucket_to_risk_stats = spark.createDataFrame(age_bucket_to_risk_stats, ['age_at_last_recon_date', 'median_risk_at_age'])",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:09:12+0000",
+      "progress": 0,
+      "config": {
+        "lineNumbers": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=2",
+              "$$hashKey": "object:17447"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=3",
+              "$$hashKey": "object:17448"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=5",
+              "$$hashKey": "object:17449"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=6",
+              "$$hashKey": "object:17450"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=7",
+              "$$hashKey": "object:17451"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643435933750_2125751957",
+      "id": "paragraph_1643435933750_2125751957",
+      "dateCreated": "2022-01-29T05:58:53+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14765",
+      "dateFinished": "2022-01-29T07:18:07+0000",
+      "dateStarted": "2022-01-29T07:13:49+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nage_bucket_to_risk_stats.show(20, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:09:29+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=8",
+              "$$hashKey": "object:17520"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=9",
+              "$$hashKey": "object:17521"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=10",
+              "$$hashKey": "object:17522"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=11",
+              "$$hashKey": "object:17523"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=12",
+              "$$hashKey": "object:17524"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643438977148_669820280",
+      "id": "paragraph_1643438977148_669820280",
+      "dateCreated": "2022-01-29T06:49:37+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:16289",
+      "dateFinished": "2022-01-29T07:21:04+0000",
+      "dateStarted": "2022-01-29T07:13:49+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------------+------------------+\n|age_at_last_recon_date|median_risk_at_age|\n+----------------------+------------------+\n|20-30                 |70.0              |\n|70-80                 |50.0              |\n|Less-than-20          |64.0              |\n|60-70                 |50.0              |\n|100+                  |50.0              |\n|30-40                 |70.0              |\n|UNK_AGE               |55.0              |\n|90-100                |37.0              |\n|80-90                 |50.0              |\n|50-60                 |64.0              |\n|40-50                 |70.0              |\n+----------------------+------------------+\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\noutput_data = output_data.join(age_bucket_to_risk_stats, on=['age_at_last_recon_date'], how='left')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:09:32+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643436585015_1931543626",
+      "id": "paragraph_1643436585015_1931543626",
+      "dateCreated": "2022-01-29T06:09:45+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14896",
+      "dateFinished": "2022-01-29T07:21:04+0000",
+      "dateStarted": "2022-01-29T07:18:07+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_data.write.mode('overwrite').parquet('s3a://yodlee-ml-output/client_account_master_features_v1_with_metrics.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:21:59+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=13",
+              "$$hashKey": "object:17632"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=14",
+              "$$hashKey": "object:17633"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=15",
+              "$$hashKey": "object:17634"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=17",
+              "$$hashKey": "object:17635"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=19",
+              "$$hashKey": "object:17636"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643436601400_2054456891",
+      "id": "paragraph_1643436601400_2054456891",
+      "dateCreated": "2022-01-29T06:10:01+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14998",
+      "dateFinished": "2022-01-29T07:27:58+0000",
+      "dateStarted": "2022-01-29T07:21:59+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nnew_output = spark.read.parquet('s3a://yodlee-ml-output/client_account_master_features_v1_with_metrics.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:29:54+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=20",
+              "$$hashKey": "object:17812"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643439536513_1021313283",
+      "id": "paragraph_1643439536513_1021313283",
+      "dateCreated": "2022-01-29T06:58:56+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:16508",
+      "dateFinished": "2022-01-29T07:30:02+0000",
+      "dateStarted": "2022-01-29T07:29:54+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nnew_output.count()",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T07:30:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=21",
+              "$$hashKey": "object:17939"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=22",
+              "$$hashKey": "object:17940"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643441394411_702274824",
+      "id": "paragraph_1643441394411_702274824",
+      "dateCreated": "2022-01-29T07:29:54+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:17653",
+      "dateFinished": "2022-01-29T07:30:19+0000",
+      "dateStarted": "2022-01-29T07:30:00+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "230056127\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\noutput_with_metrics = spark.read.parquet('s3a://yodlee-ml-output/client_account_master_features_v1_with_metrics.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:21:41+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=26",
+              "$$hashKey": "object:18154"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643441400451_1852723723",
+      "id": "paragraph_1643441400451_1852723723",
+      "dateCreated": "2022-01-29T07:30:00+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:17743",
+      "dateFinished": "2022-01-29T10:21:49+0000",
+      "dateStarted": "2022-01-29T10:21:41+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ndef get_advisor_aum_median(iterable):\n    data = [_ for _ in iterable if _]\n    if not data:\n        return -1\n    return statistics.median(data)\n    \nadvisor_metrics = output_with_metrics.rdd.map(lambda row: ((row.advisor_id, row.my_date), row.total_aum)).groupByKey().mapValues(get_advisor_aum_median)\nadvisor_metrics = advisor_metrics.map(lambda row: [row[0][0], row[0][1], row[1]])\nadvisor_metrics = spark.createDataFrame(advisor_metrics, ['advisor_id','my_date','median_advisor_aum'])",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:28:48+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=29",
+              "$$hashKey": "object:18399"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643441480905_992141492",
+      "id": "paragraph_1643441480905_992141492",
+      "dateCreated": "2022-01-29T07:31:20+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18020",
+      "dateFinished": "2022-01-29T10:31:48+0000",
+      "dateStarted": "2022-01-29T10:28:48+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_with_metrics = output_with_metrics.join(advisor_metrics, on=['advisor_id','my_date'], how='left')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:29:59+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643451882591_336317868",
+      "id": "paragraph_1643451882591_336317868",
+      "dateCreated": "2022-01-29T10:24:42+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18168",
+      "dateFinished": "2022-01-29T10:31:48+0000",
+      "dateStarted": "2022-01-29T10:29:59+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\noutput_with_metrics.write.mode('overwrite').parquet('s3a://yodlee-ml-output/client_account_master_features_v1_tmp_state.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:34:58+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=30",
+              "$$hashKey": "object:18519"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=31",
+              "$$hashKey": "object:18520"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=32",
+              "$$hashKey": "object:18521"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643451928774_1109180644",
+      "id": "paragraph_1643451928774_1109180644",
+      "dateCreated": "2022-01-29T10:25:28+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18258",
+      "dateFinished": "2022-01-29T10:37:36+0000",
+      "dateStarted": "2022-01-29T10:34:58+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ngt_data = spark.read.parquet('s3a://yodlee-ml-output/final_gt_v6/')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:38:55+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=33",
+              "$$hashKey": "object:18687"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452498742_94069342",
+      "id": "paragraph_1643452498742_94069342",
+      "dateCreated": "2022-01-29T10:34:58+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18410",
+      "dateFinished": "2022-01-29T10:39:07+0000",
+      "dateStarted": "2022-01-29T10:38:55+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ngt_data.show(10, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:40:24+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=36",
+              "$$hashKey": "object:18941"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452735672_140392474",
+      "id": "paragraph_1643452735672_140392474",
+      "dateCreated": "2022-01-29T10:38:55+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18534",
+      "dateFinished": "2022-01-29T10:40:26+0000",
+      "dateStarted": "2022-01-29T10:40:24+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+---------+-------+----------+------------------------+-------------------------------------------+\n|global_id|client_id|channel|my_date   |account_dist            |label                                      |\n+---------+---------+-------+----------+------------------------+-------------------------------------------+\n|Lw_944459|944459   |Lw     |2020-10-02|[073821181 -> 83889.04] |not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2020-11-04|[073821181 -> 83548.29] |not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2020-12-03|[073821181 -> 103568.83]|not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-01-04|[073821181 -> 104235.24]|not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-02-03|[073821181 -> 107613.9] |not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-03-02|[073821181 -> 112138.0] |not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-04-01|[073821181 -> 116967.65]|not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-05-04|[073821181 -> 118415.38]|not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-06-02|[073821181 -> 118587.01]|not_enough_history_never_added_any_accounts|\n|Lw_944459|944459   |Lw     |2021-07-02|[073821181 -> 119606.65]|not_enough_history_never_added_any_accounts|\n+---------+---------+-------+----------+------------------------+-------------------------------------------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\nfinal_input = spark.read.parquet('s3a://yodlee-ml-output/client_account_master_features_v1_tmp_state.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:39:46+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=35",
+              "$$hashKey": "object:18821"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452742575_349348403",
+      "id": "paragraph_1643452742575_349348403",
+      "dateCreated": "2022-01-29T10:39:02+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18618",
+      "dateFinished": "2022-01-29T10:39:52+0000",
+      "dateStarted": "2022-01-29T10:39:46+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ngt_data = gt_data.withColumnRenamed('snapshot_date', 'my_date')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:40:21+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452786655_2125839362",
+      "id": "paragraph_1643452786655_2125839362",
+      "dateCreated": "2022-01-29T10:39:46+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18737",
+      "dateFinished": "2022-01-29T10:40:21+0000",
+      "dateStarted": "2022-01-29T10:40:21+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nfinal_input = final_input.join(gt_data, on=['global_id','my_date'], how='left')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:40:54+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452821596_1153091603",
+      "id": "paragraph_1643452821596_1153091603",
+      "dateCreated": "2022-01-29T10:40:21+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18832",
+      "dateFinished": "2022-01-29T10:40:54+0000",
+      "dateStarted": "2022-01-29T10:40:54+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\nfinal_input.groupBy('label').count().show(20, truncate=False)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:41:17+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=37",
+              "$$hashKey": "object:19227"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=38",
+              "$$hashKey": "object:19228"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=39",
+              "$$hashKey": "object:19229"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=40",
+              "$$hashKey": "object:19230"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=41",
+              "$$hashKey": "object:19231"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=42",
+              "$$hashKey": "object:19232"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452854057_1526464435",
+      "id": "paragraph_1643452854057_1526464435",
+      "dateCreated": "2022-01-29T10:40:54+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18952",
+      "dateFinished": "2022-01-29T10:43:03+0000",
+      "dateStarted": "2022-01-29T10:41:17+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------------------------------------------+---------+\n|label                                                    |count    |\n+---------------------------------------------------------+---------+\n|null                                                     |23983095 |\n|not_enough_history_never_added_any_accounts              |49456035 |\n|new_account_added                                        |864155   |\n|going_to_add_more_accounts                               |9436008  |\n|not_going_to_add_anymore_account_never_added_any_accounts|129431599|\n|not_going_to_add_anymore_accounts                        |12406921 |\n|may_add_more_accounts                                    |4478314  |\n+---------------------------------------------------------+---------+\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data = final_input.filter((final_input.label == 'going_to_add_more_accounts') | (final_input.label == 'not_going_to_add_anymore_accounts'))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:02:51+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643452877786_621579989",
+      "id": "paragraph_1643452877786_621579989",
+      "dateCreated": "2022-01-29T10:41:17+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19027",
+      "dateFinished": "2022-01-29T11:02:51+0000",
+      "dateStarted": "2022-01-29T11:02:51+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data.count()",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:44:40+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=43",
+              "$$hashKey": "object:19502"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=44",
+              "$$hashKey": "object:19503"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=45",
+              "$$hashKey": "object:19504"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=46",
+              "$$hashKey": "object:19505"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643453010247_1347643522",
+      "id": "paragraph_1643453010247_1347643522",
+      "dateCreated": "2022-01-29T10:43:30+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19257",
+      "dateFinished": "2022-01-29T10:45:57+0000",
+      "dateStarted": "2022-01-29T10:44:40+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "21842929\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data.schema.names",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:46:32+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643453080169_1914793303",
+      "id": "paragraph_1643453080169_1914793303",
+      "dateCreated": "2022-01-29T10:44:40+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19357",
+      "dateFinished": "2022-01-29T10:46:32+0000",
+      "dateStarted": "2022-01-29T10:46:32+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "['global_id', 'my_date', 'advisor_id', 'age_at_last_recon_date', 'age_id', 'Annuity_AUM', 'Brokerage_Cash_AUM', 'Charitable_Gift_Account_AUM', 'Conservator_AUM', 'Corporate_Investment_Account_AUM', 'Coverdell_Education_Savings_Account_ESA_AUM', 'Custodial_Account_AUM', 'Deferred_Compensation_Plan_457_AUM', 'Defined_Benefit_Plan_AUM', 'Defined_Contribution_Plan_AUM', 'Educational_Savings_Plan_529_AUM', 'Employee_Retirement_Account_401k_AUM', 'Employee_Retirement_Savings_Plan_403b_AUM', 'Estate_AUM', 'Executor_AUM', 'Health_Savings_Account_HSA_AUM', 'Individual_Retirement_Account_IRA_AUM', 'Individual_AUM', 'Joint_Tenants_Community_Property_AUM', 'Joint_Tenants_Tenancy_in_Common_JTIC_AUM', 'Joint_Tenants_Tenants_By_Entirety_AUM', 'Joint_Tenants_With_Rights_Of_Survivorship_JTWROS_AUM', 'Keogh_Plan_AUM', 'Money_Purchase_Plan_AUM', 'Money_Purchase_Retirement_Plan_401a_AUM', 'Non_Profit_Organization_501c_AUM', 'Nonqualified_Deferred_Compensation_Plan_409a_AUM', 'Other_AUM', 'Partnership_AUM', 'Pension_Plan_AUM', 'Profit_Sharing_Plan_AUM', 'Proprietorship_AUM', 'Rollover_IRA_AUM', 'Roth_403b_AUM', 'Roth_IRA_AUM', 'SEP_IRA_AUM', 'Simple_IRA_AUM', 'Spousal_IRA_AUM', 'Trust_AUM', 'UNK_Registration_Type_AUM', 'Uniform_Gift_to_Minors_Act_UGMA_AUM', 'Uniform_Transfer_to_Minors_Act_UTMA_AUM', 'channel', 'client_id', 'diff_min_max_aum', 'diff_min_max_risk', 'family_mem_id', 'max_aum', 'max_risk', 'median_aum', 'median_risk', 'min_aum', 'min_risk', 'num_accounts', 'tax_status_0', 'tax_status_1', 'total_aum', 'total_cash', 'total_unsupervised_assets', 'weighted_risk', 'date_of_birth', 'median_aum_at_age', 'median_risk_at_age', 'median_advisor_aum', 'client_id', 'channel', 'account_dist', 'label']\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data = training_data.filter((training_data.median_aum_at_age != -1) | (training_data.median_risk_at_age != -1) | (training_data.median_advisor_aum != -1))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:02:55+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643453360825_702047939",
+      "id": "paragraph_1643453360825_702047939",
+      "dateCreated": "2022-01-29T10:49:20+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19607",
+      "dateFinished": "2022-01-29T11:02:55+0000",
+      "dateStarted": "2022-01-29T11:02:55+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data.count()",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T10:55:08+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=53",
+              "$$hashKey": "object:20121"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=54",
+              "$$hashKey": "object:20122"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=55",
+              "$$hashKey": "object:20123"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=56",
+              "$$hashKey": "object:20124"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643453555090_1376300191",
+      "id": "paragraph_1643453555090_1376300191",
+      "dateCreated": "2022-01-29T10:52:35+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19854",
+      "dateFinished": "2022-01-29T10:56:05+0000",
+      "dateStarted": "2022-01-29T10:55:08+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "21842929\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data = training_data.withColumn('median_aum_at_age_diff', col('total_aum') - col('median_aum_at_age'))\ntraining_data = training_data.withColumn('median_risk_at_age_diff', col('weighted_risk') - col('median_risk_at_age'))\ntraining_data = training_data.withColumn('median_advisor_aum_diff', col('total_aum') - col('median_advisor_aum'))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:02:59+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643453182373_724190152",
+      "id": "paragraph_1643453182373_724190152",
+      "dateCreated": "2022-01-29T10:46:22+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19522",
+      "dateFinished": "2022-01-29T11:02:59+0000",
+      "dateStarted": "2022-01-29T11:02:59+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ntrainable_cols = ['global_id','my_date','label','Annuity_AUM', 'Brokerage_Cash_AUM', 'Charitable_Gift_Account_AUM', 'Conservator_AUM', 'Corporate_Investment_Account_AUM', 'Coverdell_Education_Savings_Account_ESA_AUM', 'Custodial_Account_AUM', 'Deferred_Compensation_Plan_457_AUM', 'Defined_Benefit_Plan_AUM', 'Defined_Contribution_Plan_AUM', 'Educational_Savings_Plan_529_AUM', 'Employee_Retirement_Account_401k_AUM', 'Employee_Retirement_Savings_Plan_403b_AUM', 'Estate_AUM', 'Executor_AUM', 'Health_Savings_Account_HSA_AUM', 'Individual_Retirement_Account_IRA_AUM', 'Individual_AUM', 'Joint_Tenants_Community_Property_AUM', 'Joint_Tenants_Tenancy_in_Common_JTIC_AUM', 'Joint_Tenants_Tenants_By_Entirety_AUM', 'Joint_Tenants_With_Rights_Of_Survivorship_JTWROS_AUM', 'Keogh_Plan_AUM', 'Money_Purchase_Plan_AUM', 'Money_Purchase_Retirement_Plan_401a_AUM', 'Non_Profit_Organization_501c_AUM', 'Nonqualified_Deferred_Compensation_Plan_409a_AUM', 'Other_AUM', 'Partnership_AUM', 'Pension_Plan_AUM', 'Profit_Sharing_Plan_AUM', 'Proprietorship_AUM', 'Rollover_IRA_AUM', 'Roth_403b_AUM', 'Roth_IRA_AUM', 'SEP_IRA_AUM', 'Simple_IRA_AUM', 'Spousal_IRA_AUM', 'Trust_AUM', 'UNK_Registration_Type_AUM', 'Uniform_Gift_to_Minors_Act_UGMA_AUM', 'Uniform_Transfer_to_Minors_Act_UTMA_AUM','diff_min_max_aum', 'diff_min_max_risk','max_aum', 'max_risk', 'median_aum', 'median_risk', 'min_aum', 'min_risk', 'num_accounts', 'tax_status_0', 'tax_status_1', 'total_aum', 'total_cash', 'total_unsupervised_assets', 'weighted_risk','median_aum_at_age_diff','median_risk_at_age_diff','median_advisor_aum_diff']\nprint(len(trainable_cols))",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:03:04+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643453823575_42409535",
+      "id": "paragraph_1643453823575_42409535",
+      "dateCreated": "2022-01-29T10:57:03+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:20147",
+      "dateFinished": "2022-01-29T11:03:04+0000",
+      "dateStarted": "2022-01-29T11:03:04+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "63\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data = training_data.select(*trainable_cols)",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:03:07+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643454021095_667409041",
+      "id": "paragraph_1643454021095_667409041",
+      "dateCreated": "2022-01-29T11:00:21+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:20216",
+      "dateFinished": "2022-01-29T11:03:07+0000",
+      "dateStarted": "2022-01-29T11:03:07+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ntraining_data.write.mode('overwrite').parquet('s3a://yodlee-ml-output/training_data_v1.parquet')",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:03:09+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=57",
+              "$$hashKey": "object:20603"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=58",
+              "$$hashKey": "object:20604"
+            },
+            {
+              "jobUrl": "http://ip-172-31-35-254.us-west-2.compute.internal:33021/jobs/job?id=59",
+              "$$hashKey": "object:20605"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643454026531_252202872",
+      "id": "paragraph_1643454026531_252202872",
+      "dateCreated": "2022-01-29T11:00:26+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:20310",
+      "dateFinished": "2022-01-29T11:05:49+0000",
+      "dateStarted": "2022-01-29T11:03:09+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-01-29T11:09:08+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1643454548175_1241421676",
+      "id": "paragraph_1643454548175_1241421676",
+      "dateCreated": "2022-01-29T11:09:08+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:20618"
+    }
+  ],
+  "name": "client_am_features",
+  "id": "2GUF7KV9V",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.10.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/client_am_features"
+}
